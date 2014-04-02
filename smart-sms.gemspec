@@ -6,7 +6,7 @@ require 'smart-sms/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "smart-sms"
-  spec.version       = ChinaSMS::VERSION
+  spec.version       = SmartSMS::VERSION
   spec.authors       = ["lyfeyaj"]
   spec.email         = ["lyfeyaj@gmail.com"]
   spec.description   = %q{A smart sms authentication tool}
@@ -18,6 +18,9 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
+
+  spec.add_dependency 'activesupport', ['>= 3.0.0']
+  spec.add_dependency 'actionpack', ['>= 3.0.0']
 
   spec.add_development_dependency "bundler", "~> 1.2"
   spec.add_development_dependency "rake"
