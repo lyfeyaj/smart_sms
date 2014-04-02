@@ -1,5 +1,6 @@
 #encoding: utf-8
 require 'active_support/configurable'
+require 'active_support/core_ext'
 
 module SmartSMS
 
@@ -25,6 +26,7 @@ module SmartSMS
     config_accessor :page_num
     config_accessor :page_size
     config_accessor :company
+    config_accessor :default_interval   # 查询短信时的时间段: end_time - start_time
     config_accessor :store_sms_in_local # :api or :local
   end
 
@@ -36,6 +38,7 @@ module SmartSMS
     config.page_num = 1
     config.page_size = 20
     config.company = '云片网'
+    config.default_interval = 1.day
     config.store_sms_in_local = false
   end
 end

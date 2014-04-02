@@ -1,6 +1,7 @@
 # encoding: utf-8
 require 'net/http'
 require 'json'
+require 'pry'
 
 module SmartSMS
   module Request
@@ -34,7 +35,7 @@ module SmartSMS
     end
 
     def base_url
-      'http://yunpian.com/' + SmartSMS.config.api_version.to_s
+      "http://yunpian.com/#{SmartSMS.config.api_version.to_s}/"
     end
   end
 end

@@ -1,11 +1,11 @@
 module SmartSMS
   module Template
     extend self
-    def get_default tpl_id = ''
+    def find_default tpl_id = ''
       Request.post 'tpl/get_default.json', tpl_id: tpl_id
     end
 
-    def get tpl_id = ''
+    def find tpl_id = ''
       Request.post 'tpl/get.json', tpl_id: tpl_id
     end
 
