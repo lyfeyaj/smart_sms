@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 SmartSMS.configure do |config|
   # config.api_key = nil
   # config.api_version = :v1
