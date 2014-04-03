@@ -3,9 +3,7 @@ require 'smart_sms/request'
 require 'smart_sms/template'
 require 'smart_sms/message_service'
 require 'smart_sms/account'
-
 require 'smart_sms/helper/verification_code'
-require 'smart_sms/has_sms_verification'
 
 module SmartSMS
   include SmartSMS::MessageService
@@ -22,6 +20,8 @@ unless SmartSMS.active_record_protected_attributes?
     require 'protected_attributes'
   rescue LoadError; end # will rescue if `ProtectedAttributes` gem is not available
 end
+
+require 'smart_sms/has_sms_verification'
 
 ActiveSupport.on_load(:active_record) do
   include SmartSMS::Model
