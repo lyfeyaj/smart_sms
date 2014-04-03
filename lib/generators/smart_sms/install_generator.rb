@@ -1,0 +1,29 @@
+require 'rails/generators'
+require 'rails/generators/active_record'
+
+module SmartSMS
+  class InstallGenerator < ::Rails::Generators::Base
+    include ::Rails::Generators::Migration
+
+    source_root File.expand_path(File.join(File.dirname(__FILE__), 'templates'))
+
+    desc 'Generates (but does not run) a migration to add a message table.'
+
+    def create_migration_file
+      add_paper_trail_migration('create_smart_sms_messages') if SmartSMS.config.store_sms_in_local
+    end
+
+    def self.next_migration_number(dirname)
+      ::ActiveRecord::Generators::Base.next_migration_number(dirname)
+    end
+
+    protected
+    def add_smart_sms_migration(template)
+      migration_dir = File.expand_path('db/migrate')
+
+      if !self.class.migration_exists?(migration_dir, template)
+        migration_template "#{template}.rb", "db/migrate/#{template}.rb"
+      end
+    end
+  end
+end

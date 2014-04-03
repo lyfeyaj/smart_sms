@@ -1,6 +1,6 @@
 # encoding: utf-8
 require 'net/http'
-require 'json'
+require 'active_support/json'
 require 'pry'
 
 module SmartSMS
@@ -24,7 +24,7 @@ module SmartSMS
 
     def result body
       begin
-        JSON.parse body
+        ActiveSupport::JSON.decode body
       rescue => e
         {
           code: 502,

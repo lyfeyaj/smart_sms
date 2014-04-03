@@ -27,7 +27,8 @@ module SmartSMS
     config_accessor :page_size
     config_accessor :company
     config_accessor :default_interval   # 查询短信时的时间段: end_time - start_time
-    config_accessor :store_sms_in_local # :api or :local
+    config_accessor :store_sms_in_local # true or false
+    config_accessor :verification_code_algorithm # :simple, :middle, :complex
   end
 
   configure do |config|
@@ -40,5 +41,6 @@ module SmartSMS
     config.company = '云片网'
     config.default_interval = 1.day
     config.store_sms_in_local = false
+    config.verification_code_algorithm = :simple
   end
 end

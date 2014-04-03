@@ -1,4 +1,4 @@
-smart-sms
+smart_sms
 =========
 
-smart-sms
+smart_sms

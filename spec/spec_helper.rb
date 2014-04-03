@@ -3,7 +3,7 @@ require 'rubygems'
 require 'bundler/setup'
 
 require 'webmock/rspec'
-require 'smart-sms'
+require 'smart_sms'
 
 #WebMock.allow_net_connect!
 RSpec.configure do |config|

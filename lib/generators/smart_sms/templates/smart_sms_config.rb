@@ -8,4 +8,5 @@ SmartSMS.configure do |config|
   # config.company = '云片网'
   # config.default_interval = 1.day
   # config.store_sms_in_local = false
+  # config.verification_code_algorithm = :simple
 end
