@@ -1,7 +1,6 @@
 # encoding: utf-8
 require 'net/http'
 require 'active_support/json'
-require 'pry'
 
 module SmartSMS
   module Request

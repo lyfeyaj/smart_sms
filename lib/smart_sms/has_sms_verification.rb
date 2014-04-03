@@ -24,16 +24,16 @@ module SmartSMS
           self.messages_association_name = options[:messages] || :messages
 
           class_attribute :message_class_name
-          self.message_class_name = options[:class_name] || 'SmartSMS::Message'
+          self.message_class_name = options[:class_name] || '::SmartSMS::Message'
 
           if ::ActiveRecord::VERSION::MAJOR >= 4 # `has_many` syntax for specifying order uses a lambda in Rails 4
             has_many self.messages_association_name,
               lambda { order("send_time ASC") },
-              :class_name => self.message_class_name, :as => :item
+              :class_name => self.message_class_name, :as => :smsable
           else
             has_many self.messages_association_name,
               :class_name => self.message_class_name,
-              :as         => :item,
+              :as         => :smsable,
               :order      => "send_time ASC"
           end
 
