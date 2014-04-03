@@ -19,15 +19,15 @@ module SmartSMS
 
   class Configuration #:nodoc:
     include ActiveSupport::Configurable
-    config_accessor :api_key
-    config_accessor :api_version
-    config_accessor :template_id
-    config_accessor :template_value
-    config_accessor :page_num
-    config_accessor :page_size
-    config_accessor :company
+    config_accessor :api_key # 授权 API KEY
+    config_accessor :api_version # API 的版本, 当前仅有v1
+    config_accessor :template_id # 指定发送信息时使用的模板
+    config_accessor :template_value # 用于指定信息文本中的可替换内容, 数组形势: [:code, :company]
+    config_accessor :page_num # 获取信息时, 指定默认的页数
+    config_accessor :page_size # 获取信息时, 一页包含信息数量
+    config_accessor :company # 默认公司名称
     config_accessor :default_interval   # 查询短信时的时间段: end_time - start_time
-    config_accessor :store_sms_in_local # true or false
+    config_accessor :store_sms_in_local # 是否存储SMS信息在本地: true or false
     config_accessor :verification_code_algorithm # :simple, :middle, :complex
   end
 
