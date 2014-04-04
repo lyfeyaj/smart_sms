@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
   s.version       = SmartSMS::VERSION
   s.authors       = ["lyfeyaj"]
   s.email         = ["lyfeyaj@gmail.com"]
-  s.description   = %q{A smart sms authentication tool}
-  s.summary       = %q{A smart sms authentication tool}
+  s.description   = %q{A smart sms verification tool}
+  s.summary       = %q{A smart sms verification tool used in China and integrate with yunpian.com}
   s.homepage      = "https://github.com/lyfeyaj/smart_sms"
   s.license       = "MIT"
 
