@@ -2,7 +2,7 @@
 require File.expand_path(File.join(File.dirname(__FILE__), 'model/message'))
 
 module SmartSMS
-  module Model
+  module HasSmsVerification
 
     def self.included(base)
       base.send :extend, ClassMethods
@@ -56,18 +56,21 @@ module SmartSMS
       module InstanceMethods
 
         def verify! code
-          sms = latest_message
-          return false if sms.blank?
-          result = if SmartSMS.config.store_sms_in_local
-            sms.code == code.to_s
-          else
-            !!(sms['text'].gsub(self.class.verify_regexp, '') == code.to_s)
-          end
+          result = verify code
           if result
             self.send("#{self.class.sms_verification_column}=", Time.now)
-            self.save
+            self.save(validate: false)
           end
-          result
+        end
+
+        def verify code
+          sms = latest_message
+          return false if sms.blank?
+          if SmartSMS.config.store_sms_in_local
+            sms.code == code.to_s
+          else
+            sms['text'].gsub(self.class.verify_regexp, '') == code.to_s
+          end
         end
 
         def verified?

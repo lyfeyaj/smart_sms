@@ -5,6 +5,12 @@ require 'smart_sms/message_service'
 require 'smart_sms/account'
 require 'smart_sms/helper/verification_code'
 
+if !defined? ActiveRecord
+  begin
+    require 'active_record'
+  rescue LoadError; end
+end
+
 module SmartSMS
   include SmartSMS::MessageService
 
@@ -24,5 +30,5 @@ end
 require 'smart_sms/has_sms_verification'
 
 ActiveSupport.on_load(:active_record) do
-  include SmartSMS::Model
+  include SmartSMS::HasSmsVerification
 end
