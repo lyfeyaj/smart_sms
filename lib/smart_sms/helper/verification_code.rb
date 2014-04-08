@@ -6,7 +6,7 @@ module SmartSMS
 
     REGISTERED_ALGORITHMS = [:simple, :middle, :complex]
 
-    def random algorithm = :simple
+    def random algorithm = ''
       algorithm = SmartSMS.config.verification_code_algorithm if algorithm.blank?
       if REGISTERED_ALGORITHMS.include? algorithm
         SmartSMS::VerificationCode.send algorithm
