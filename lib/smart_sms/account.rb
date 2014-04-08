@@ -14,7 +14,7 @@ module SmartSMS
     #   emergency_mobile:  紧急联系人手机号
     #   alarm_balance:     短信余额提醒阈值。一天只提示一次
     def set options = {}
-      Request.post 'tpl/get.json', options
+      Request.post 'user/set.json', options
     end
   end
 end

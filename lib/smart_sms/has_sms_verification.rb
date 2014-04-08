@@ -82,24 +82,30 @@ module SmartSMS
         end
 
         def latest_message
+          end_time = Time.now
+          start_time = end_time - 1.hour # the verification code will be expired within 1 hour
           if SmartSMS.config.store_sms_in_local
-            self.send(self.class.messages_association_name).last
+            self.send(self.class.messages_association_name)
+                .where("send_time >= ? and send_time <= ?", start_time, end_time)
+                .last
           else
-            SmartSMS.find(
-              start_time: (Time.now - 1.hour),
-              end_time: Time.now,
+            result = SmartSMS.find(
+              start_time: start_time,
+              end_time: end_time,
               mobile: self.send(self.class.sms_mobile_column),
               page_size: 1
-            )['sms'].first
+            )
+            result['sms'].first
           end
         end
 
-        def deliver text = random_verification_code
+        def deliver text = SmartSMS::VerificationCode.random
           result = SmartSMS.deliver self.send(self.class.sms_mobile_column), text
           if result['code'] == 0
             sms = SmartSMS.find_by_sid(result['result']['sid'])['sms']
             if SmartSMS.config.store_sms_in_local
               message = self.send(self.messages_association_name).build sms
+              message.send_time = Time.parse sms['send_time']
               message.code = text
               message.save
             else
@@ -108,17 +114,6 @@ module SmartSMS
           else
             self.errors.add :deliver, result
             false
-          end
-        end
-
-        def random_verification_code
-          case SmartSMS.config.verification_code_algorithm
-          when :simple
-            SmartSMS::VerificationCode.simple
-          when :middle
-            SmartSMS::VerificationCode.middle
-          when :complex
-            SmartSMS::VerificationCode.complex
           end
         end
 
