@@ -4,7 +4,7 @@ module SmartSMS
   module VerificationCode
     extend self
 
-    REGISTERED_ALGORITHMS = [:simple, :middle, :cmoplex]
+    REGISTERED_ALGORITHMS = [:simple, :middle, :complex]
 
     def random algorithm = :simple
       algorithm = SmartSMS.config.verification_code_algorithm if algorithm.blank?
@@ -22,7 +22,7 @@ module SmartSMS
     end
 
     def middle
-      SecureRandom.base64.slice(1..6).downcase
+      SecureRandom.base64.gsub!(/[^1-9a-zA-Z]/,'').slice(1..6).downcase
     end
 
     def complex
