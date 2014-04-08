@@ -22,7 +22,7 @@ module SmartSMS
     end
 
     def middle
-      SecureRandom.base64.gsub!(/[^1-9a-zA-Z]/,'').slice(1..6).downcase
+      SecureRandom.base64.gsub!(/[^0-9a-zA-Z]/,'').slice(1..6).downcase
     end
 
     def complex
