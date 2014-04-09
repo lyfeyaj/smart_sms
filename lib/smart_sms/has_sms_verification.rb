@@ -29,7 +29,7 @@ module SmartSMS
         self.sms_mobile_column = moible_column
 
         class_attribute :verify_regexp
-        self.verify_regexp = /(【.+】|[^a-zA-Z0-9\.\-\+_])/ # 用于抽取校验码, 如若修改过模板, 可能需要复写这个这正则
+        self.verify_regexp = /(【.+】|[^a-zA-Z0-9\.\-\+_])/ # 用于抽取校验码, 如若修改过模板, 可能需要修改这个这正则
 
         if SmartSMS.config.store_sms_in_local
 
@@ -64,7 +64,7 @@ module SmartSMS
           end
         end
 
-        # 安全verify方法, 用于校验短信验证码是否正确
+        # 安全verify方法, 用于校验短信验证码是否正确, 返回: true 或 false
         #
         def verify code
           sms = latest_message
