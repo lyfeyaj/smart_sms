@@ -86,7 +86,7 @@ module SmartSMS
           self[self.class.sms_verification_column]
         end
 
-        # 获取最新的一条短信记录
+        # 获取最新的一条有效短信记录
         #
         def latest_message
           end_time = Time.now
