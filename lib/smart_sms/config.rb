@@ -26,7 +26,8 @@ module SmartSMS
     config_accessor :page_num # 获取信息时, 指定默认的页数
     config_accessor :page_size # 获取信息时, 一页包含信息数量
     config_accessor :company # 默认公司名称
-    config_accessor :default_interval   # 查询短信时的时间段: end_time - start_time
+    config_accessor :expires_in # 短信验证过期时间
+    config_accessor :default_interval   # 查询短信时的默认时间段: end_time - start_time
     config_accessor :store_sms_in_local # 是否存储SMS信息在本地: true or false
     config_accessor :verification_code_algorithm # :simple, :middle, :complex
   end
@@ -39,6 +40,7 @@ module SmartSMS
     config.page_num = 1
     config.page_size = 20
     config.company = '云片网'
+    config.expires_in = 1.hour
     config.default_interval = 1.day
     config.store_sms_in_local = false
     config.verification_code_algorithm = :simple

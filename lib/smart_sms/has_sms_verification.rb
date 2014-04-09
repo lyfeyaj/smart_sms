@@ -18,7 +18,7 @@ module SmartSMS
       # :class_name   自定义的Message类名称. 默认是 `::SmartSMS::Message`
       # :messages     自定义的Message关联名称.  默认是 `:versions`.
       #
-      def has_sms_verification moible_column, verification_column, options = {}
+      def has_sms_verification moible_column = :phone, verification_column = :verified_at, options = {}
         send :include, InstanceMethods
 
         # 用于判断是否已经验证的字段, Datetime 类型, 例如 :verified_at
@@ -29,7 +29,7 @@ module SmartSMS
         self.sms_mobile_column = moible_column
 
         class_attribute :verify_regexp
-        self.verify_regexp = /(【.+】|[^a-zA-Z0-9\.\-\+_])/
+        self.verify_regexp = /(【.+】|[^a-zA-Z0-9\.\-\+_])/ # 用于抽取校验码, 如若修改过模板, 可能需要复写这个这正则
 
         if SmartSMS.config.store_sms_in_local
 
@@ -55,6 +55,7 @@ module SmartSMS
 
       module InstanceMethods
 
+        # 非安全verify!方法, 验证成功后会存储成功的结果到数据表中
         def verify! code
           result = verify code
           if result
@@ -63,6 +64,8 @@ module SmartSMS
           end
         end
 
+        # 安全verify方法, 用于校验短信验证码是否正确
+        #
         def verify code
           sms = latest_message
           return false if sms.blank?
@@ -73,17 +76,21 @@ module SmartSMS
           end
         end
 
+        # 判断是否已经验证成功
+        #
         def verified?
-          self[self.class.sms_verification_column].present?
+          verified_at.present?
         end
 
         def verified_at
           self[self.class.sms_verification_column]
         end
 
+        # 获取最新的一条短信记录
+        #
         def latest_message
           end_time = Time.now
-          start_time = end_time - 1.hour # the verification code will be expired within 1 hour
+          start_time = end_time - SmartSMS.config.expires_in # the verification code will be expired within 1 hour
           if SmartSMS.config.store_sms_in_local
             self.send(self.class.messages_association_name)
                 .where("send_time >= ? and send_time <= ?", start_time, end_time)
@@ -99,6 +106,8 @@ module SmartSMS
           end
         end
 
+        # 发送短信至手机
+        #
         def deliver text = SmartSMS::VerificationCode.random
           result = SmartSMS.deliver self.send(self.class.sms_mobile_column), text
           if result['code'] == 0

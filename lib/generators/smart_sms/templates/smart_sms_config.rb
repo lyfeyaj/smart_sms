@@ -8,6 +8,7 @@ SmartSMS.configure do |config|
   # config.page_num = 1
   # config.page_size = 20
   # config.company = '云片网'
+  # config.expires_in = 1.hour
   # config.default_interval = 1.day
   # config.store_sms_in_local = false
   # config.verification_code_algorithm = :simple
