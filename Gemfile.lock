@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    smart_sms (0.0.2)
+    smart_sms (0.0.3)
       activerecord (>= 3.0, < 5.0)
       activesupport (>= 3.0, < 5.0)
 
