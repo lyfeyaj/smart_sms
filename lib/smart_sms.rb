@@ -1,9 +1,10 @@
 require 'smart_sms/config'
 require 'smart_sms/request'
 require 'smart_sms/template'
+require 'smart_sms/helpers/fake_sms'
+require 'smart_sms/helpers/verification_code'
 require 'smart_sms/message_service'
 require 'smart_sms/account'
-require 'smart_sms/helper/verification_code'
 
 if !defined? ActiveRecord
   begin

@@ -114,7 +114,6 @@ module SmartSMS
             sms = SmartSMS.find_by_sid(result['result']['sid'])['sms']
             if SmartSMS.config.store_sms_in_local
               message = self.send(self.messages_association_name).build sms
-              message.send_time = Time.parse sms['send_time']
               message.code = text
               message.save
             else
@@ -126,6 +125,16 @@ module SmartSMS
           end
         end
 
+        def deliver_fake_sms text = SmartSMS::VerificationCode.random
+          sms = SmartSMS::FakeSMS.build_fake_sms self.send(self.class.sms_mobile_column), text, SmartSMS.config.company
+          if SmartSMS.config.store_sms_in_local
+            message = self.send(self.messages_association_name).build sms
+            message.code = text
+            message.save
+          else
+            sms
+          end
+        end
       end
     end
   end
