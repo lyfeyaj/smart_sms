@@ -18,10 +18,11 @@ module SmartSms
     end
 
     protected
+
     def add_smart_sms_migration(template)
       migration_dir = File.expand_path('db/migrate')
 
-      if !self.class.migration_exists?(migration_dir, template)
+      unless self.class.migration_exists?(migration_dir, template)
         migration_template "#{template}.rb", "db/migrate/#{template}.rb"
       end
     end

@@ -2,12 +2,14 @@
 require File.expand_path(File.join(File.dirname(__FILE__), 'model/message'))
 
 module SmartSMS
+  # Module that will be hooked into ActiveRecord to provide magic methods
+  #
   module HasSmsVerification
-
     def self.included(base)
       base.send :extend, ClassMethods
     end
 
+    # Class methods that will be extended
     module ClassMethods
 
       # 在您的Model里面声明这个方法, 以添加SMS短信验证功能
@@ -18,7 +20,7 @@ module SmartSMS
       # :class_name   自定义的Message类名称. 默认是 `::SmartSMS::Message`
       # :messages     自定义的Message关联名称.  默认是 `:versions`.
       #
-      def has_sms_verification moible_column = :phone, verification_column = :verified_at, options = {}
+      def has_sms_verification(moible_column = :phone, verification_column = :verified_at, options = {})
         send :include, InstanceMethods
 
         # 用于判断是否已经验证的字段, Datetime 类型, 例如 :verified_at
@@ -40,33 +42,33 @@ module SmartSMS
           self.message_class_name = options[:class_name] || '::SmartSMS::Message'
 
           if ::ActiveRecord::VERSION::MAJOR >= 4 # Rails 4 里面, 在 `has_many` 声明中定义order lambda的语法
-            has_many self.messages_association_name,
-              lambda { order("send_time ASC") },
-              :class_name => self.message_class_name, :as => :smsable
+            has_many messages_association_name,
+              -> { order('send_time ASC') },
+              class_name: message_class_name, as: :smsable
           else
-            has_many self.messages_association_name,
-              :class_name => self.message_class_name,
-              :as         => :smsable,
-              :order      => "send_time ASC"
+            has_many messages_association_name,
+              class_name: message_class_name,
+              as:         :smsable,
+              order:      'send_time ASC'
           end
 
         end
       end
 
+      # Instance methods
       module InstanceMethods
-
         # 非安全verify!方法, 验证成功后会存储成功的结果到数据表中
-        def verify! code
+        def verify!(code)
           result = verify code
           if result
-            self.send("#{self.class.sms_verification_column}=", Time.now)
-            self.save(validate: false)
+            send("#{self.class.sms_verification_column}=", Time.now)
+            save(validate: false)
           end
         end
 
         # 安全verify方法, 用于校验短信验证码是否正确, 返回: true 或 false
         #
-        def verify code
+        def verify(code)
           sms = latest_message
           return false if sms.blank?
           if SmartSMS.config.store_sms_in_local
@@ -92,14 +94,14 @@ module SmartSMS
           end_time = Time.now
           start_time = end_time - SmartSMS.config.expires_in # the verification code will be expired within 1 hour
           if SmartSMS.config.store_sms_in_local
-            self.send(self.class.messages_association_name)
-                .where("send_time >= ? and send_time <= ?", start_time, end_time)
-                .last
+            send(self.class.messages_association_name)
+              .where('send_time >= ? and send_time <= ?', start_time, end_time)
+              .last
           else
             result = SmartSMS.find(
               start_time: start_time,
               end_time: end_time,
-              mobile: self.send(self.class.sms_mobile_column),
+              mobile: send(self.class.sms_mobile_column),
               page_size: 1
             )
             result['sms'].first
@@ -108,27 +110,27 @@ module SmartSMS
 
         # 发送短信至手机
         #
-        def deliver text = SmartSMS::VerificationCode.random
-          result = SmartSMS.deliver self.send(self.class.sms_mobile_column), text
+        def deliver(text = SmartSMS::VerificationCode.random)
+          result = SmartSMS.deliver send(self.class.sms_mobile_column), text
           if result['code'] == 0
             sms = SmartSMS.find_by_sid(result['result']['sid'])['sms']
             if SmartSMS.config.store_sms_in_local
-              message = self.send(self.messages_association_name).build sms
+              message = send(self.class.messages_association_name).build sms
               message.code = text
               message.save
             else
               sms
             end
           else
-            self.errors.add :deliver, result
+            errors.add :deliver, result
             false
           end
         end
 
-        def deliver_fake_sms text = SmartSMS::VerificationCode.random
-          sms = SmartSMS::FakeSMS.build_fake_sms self.send(self.class.sms_mobile_column), text, SmartSMS.config.company
+        def deliver_fake_sms(text = SmartSMS::VerificationCode.random)
+          sms = SmartSMS::FakeSMS.build_fake_sms send(self.class.sms_mobile_column), text, SmartSMS.config.company
           if SmartSMS.config.store_sms_in_local
-            message = self.send(self.messages_association_name).build sms
+            message = send(self.class.messages_association_name).build sms
             message.code = text
             message.save
           else

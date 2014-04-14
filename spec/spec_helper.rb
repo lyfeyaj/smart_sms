@@ -7,6 +7,6 @@ require 'smart_sms'
 
 require 'database_cleaner'
 
-#WebMock.allow_net_connect!
+# WebMock.allow_net_connect!
 RSpec.configure do |config|
 end

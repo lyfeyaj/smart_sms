@@ -1,9 +1,8 @@
-#encoding: utf-8
+# encoding: utf-8
 require 'active_support/configurable'
 require 'active_support/core_ext'
 
 module SmartSMS
-
   # Configures global settings for SmartSMS
   #   SmartSMS.configure do |config|
   #     config.api_key = 'd63124354422b046081a44466'
@@ -17,6 +16,8 @@ module SmartSMS
     @config
   end
 
+  # Configuration class
+  #
   class Configuration #:nodoc:
     include ActiveSupport::Configurable
     config_accessor :api_key # 授权 API KEY

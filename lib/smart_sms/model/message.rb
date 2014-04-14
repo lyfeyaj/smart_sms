@@ -1,4 +1,6 @@
 module SmartSMS
+  # Message model to store sms messages
+  #
   class Message < ::ActiveRecord::Base
     self.table_name = 'smart_sms_messages'
     belongs_to :smsable, polymorphic: true

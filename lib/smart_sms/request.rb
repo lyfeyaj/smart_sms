@@ -3,17 +3,18 @@ require 'net/http'
 require 'active_support/json'
 
 module SmartSMS
+  # Module that manage requests
   module Request
-    extend self
+    module_function
 
-    def post api, options = {}
+    def post(api, options = {})
       options[:apikey] = SmartSMS.config.api_key
       uri = URI.join(base_url, api)
       res = Net::HTTP.post_form(uri, options)
       result res.body
     end
 
-    def get api, options = {}
+    def get(api, options = {})
       options[:apikey] = SmartSMS.config.api_key
       uri = URI.join(base_url, api)
       result Net::HTTP.get(uri, options)
@@ -21,20 +22,20 @@ module SmartSMS
 
     private
 
-    def result body
+    def result(body)
       begin
         ActiveSupport::JSON.decode body
       rescue => e
         {
           code: 502,
-          msg: "内容解析错误",
+          msg: '内容解析错误',
           detail: e.to_s
         }
       end
     end
 
     def base_url
-      "http://yunpian.com/#{SmartSMS.config.api_version.to_s}/"
+      "http://yunpian.com/#{SmartSMS.config.api_version}/"
     end
   end
 end

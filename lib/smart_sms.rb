@@ -6,7 +6,7 @@ require 'smart_sms/helpers/verification_code'
 require 'smart_sms/message_service'
 require 'smart_sms/account'
 
-if !defined? ActiveRecord
+unless defined? ActiveRecord
   begin
     require 'active_record'
   rescue LoadError; end
