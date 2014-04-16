@@ -14,7 +14,7 @@ module SmartSMS
 
       # 在您的Model里面声明这个方法, 以添加SMS短信验证功能
       # moible_column:       mobile 绑定的字段, 用于发送短信
-      # verification_column: 验证绑定的字段, 用于判断是否以验证
+      # verification_column: 验证绑定的字段, 用于判断是否已验证
       #
       # Options:
       # :class_name   自定义的Message类名称. 默认是 `::SmartSMS::Message`
