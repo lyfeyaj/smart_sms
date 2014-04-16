@@ -38,6 +38,16 @@ SmartSMS [![Build Status](https://travis-ci.org/lyfeyaj/smart_sms.png?branch=mas
 gem 'smart_sms'
 ```
 
+然后, 在 console 中执行下面的代码:
+
+``` bash
+rails g smart_sms:config # 将会拷贝配置文件至 `config/initializers/smart_sms_config.rb`
+
+# 如果, 需要将所有短信都在本地存储, 则需要将配置文件中的 `store_sms_in_local` 设置为 true, 然后运行
+rails g smart_sms:install # 程序将会拷贝相应的 migration 文件到 `db/migrate` 目录下
+rake db:migrate
+```
+
 ##### 配置
 
 ``` ruby
@@ -88,6 +98,12 @@ user.verify! '123456' # 返回 true 或者 false, 同时修改数据库的 verif
 
 # 查询验证日期
 user.verified_at
+
+# 查询最新的一条有效短信记录
+user.latest_message # 返回有效期内的最近一条短信, 若无则返回nil
+
+# 发送假信息, 方便非国内用户测试用
+user.deliver_fake_sms # messages中会保存一条新的短信记录, 但是不会发送短信到手机
 ```
 
 ### 基本用法
