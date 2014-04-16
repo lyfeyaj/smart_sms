@@ -7,7 +7,11 @@ module SmartSms
 
     source_root File.expand_path(File.join(File.dirname(__FILE__), 'templates'))
 
-    desc 'Generates (but does not run) a migration to add a message table.'
+    desc <<-EOF
+Generates (but does not run) a migration to add a messages table.
+You need to set `store_sms_in_local` to `true` in your config file
+before running this command
+  EOF
 
     def create_migration_file
       add_smart_sms_migration('create_smart_sms_messages') if SmartSMS.config.store_sms_in_local
