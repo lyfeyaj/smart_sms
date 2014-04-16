@@ -20,8 +20,6 @@ module SmartSMS
       end
     end
 
-    private
-
     def simple
       SecureRandom.random_number.to_s.slice(-6..-1)
     end

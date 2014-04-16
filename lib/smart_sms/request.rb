@@ -5,8 +5,6 @@ require 'active_support/json'
 module SmartSMS
   # Module that manage requests
   module Request
-    module_function
-
     def post(api, options = {})
       options[:apikey] = SmartSMS.config.api_key
       uri = URI.join(base_url, api)
@@ -37,5 +35,7 @@ module SmartSMS
     def base_url
       "http://yunpian.com/#{SmartSMS.config.api_version}/"
     end
+
+    module_function :post, :get, :result, :base_url
   end
 end

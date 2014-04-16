@@ -44,7 +44,8 @@ module SmartSMS
           if ::ActiveRecord::VERSION::MAJOR >= 4 # Rails 4 里面, 在 `has_many` 声明中定义order lambda的语法
             has_many messages_association_name,
               -> { order('send_time ASC') },
-              class_name: message_class_name, as: :smsable
+              class_name: message_class_name,
+              as:         :smsable
           else
             has_many messages_association_name,
               class_name: message_class_name,
@@ -92,7 +93,7 @@ module SmartSMS
         #
         def latest_message
           end_time = Time.now
-          start_time = end_time - SmartSMS.config.expires_in # the verification code will be expired within 1 hour
+          start_time = end_time - SmartSMS.config.expires_in
           if SmartSMS.config.store_sms_in_local
             send(self.class.messages_association_name)
               .where('send_time >= ? and send_time <= ?', start_time, end_time)
@@ -114,13 +115,7 @@ module SmartSMS
           result = SmartSMS.deliver send(self.class.sms_mobile_column), text
           if result['code'] == 0
             sms = SmartSMS.find_by_sid(result['result']['sid'])['sms']
-            if SmartSMS.config.store_sms_in_local
-              message = send(self.class.messages_association_name).build sms
-              message.code = text
-              message.save
-            else
-              sms
-            end
+            save_or_return_message sms, text
           else
             errors.add :deliver, result
             false
@@ -128,7 +123,15 @@ module SmartSMS
         end
 
         def deliver_fake_sms(text = SmartSMS::VerificationCode.random)
-          sms = SmartSMS::FakeSMS.build_fake_sms send(self.class.sms_mobile_column), text, SmartSMS.config.company
+          mobile = send(self.class.sms_mobile_column)
+          company = SmartSMS.config.company
+          sms = SmartSMS::FakeSMS.build_fake_sms mobile, text, company
+          save_or_return_message sms, text
+        end
+
+        private
+
+        def save_or_return_message(sms, text)
           if SmartSMS.config.store_sms_in_local
             message = send(self.class.messages_association_name).build sms
             message.code = text

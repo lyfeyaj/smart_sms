@@ -10,3 +10,14 @@ require 'database_cleaner'
 # WebMock.allow_net_connect!
 RSpec.configure do |config|
 end
+
+begin
+  require 'rails'
+rescue LoadError
+end
+
+if defined? Rails
+  require 'fake_app/rails_app'
+
+  require 'rspec/rails'
+end
