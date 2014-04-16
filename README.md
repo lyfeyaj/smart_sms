@@ -30,6 +30,14 @@ SmartSMS [![Build Status](https://travis-ci.org/lyfeyaj/smart_sms.png?branch=mas
 
 ### 结合 Rails 使用
 
+##### 安装
+
+在您的 `Gemfile` 里面添加:
+
+```
+gem 'smart_sms'
+```
+
 ##### 配置
 
 ``` ruby
@@ -84,4 +92,3 @@ user.verified_at
 
 ### 基本用法
 
-## 使用方法和例子
