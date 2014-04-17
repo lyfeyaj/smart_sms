@@ -191,9 +191,9 @@ SmartSMS::Account.info
 SmartSMS::Account.set emergency_contact: 13764071479
 # =>
 #{
-#  "code":0,
-#  "msg":"OK",
-#  "detail":null
+#  "code" => 0,
+#  "msg" => "OK",
+#  "detail" => null
 #}
 
 ```
