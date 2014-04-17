@@ -245,3 +245,9 @@ SmartSMS::VerificationCode.complex # => "x+rkag6a"
 + 保存代码 (git commit -am 'Added some feature')
 + 上传到分支 (git push origin my-new-feature)
 + 创建一个新的合并请求
+
+## LICENCE
+MIT
+
+## 作者
+[Felix Liu](https://github.com/lyfeyaj)
