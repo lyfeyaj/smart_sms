@@ -76,8 +76,8 @@ class User < ActiveRecord::Base
   # verification_column: 验证绑定的字段, 用于判断是否已验证, 
   #
   # Options:
-  #   :class_name   自定义的Message类名称. 默认是 `::SmartSMS::Message`
-  #   :messages     自定义的Message关联名称.  默认是 `:versions`.
+  #   :class_name   自定义的Message类名称. 默认是 `SmartSMS::Message`
+  #   :messages     自定义的Message关联名称.  默认是 `:messages`.
   #
   has_sms_verification
 end
