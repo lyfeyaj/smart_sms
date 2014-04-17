@@ -1,7 +1,7 @@
 SmartSMS [![Build Status](https://travis-ci.org/lyfeyaj/smart_sms.png?branch=master)](https://travis-ci.org/lyfeyaj/smart_sms) [![Code Climate](https://codeclimate.com/github/lyfeyaj/smart_sms.png)](https://codeclimate.com/github/lyfeyaj/smart_sms)
 ===================================
 
-提供在中国境内发送短信, 校验, 以及 ActiveRecord 集成功能
+提供在中国境内发送短信, 校验, 集成 ActiveRecord
 
 功能特点
 --------
@@ -108,3 +108,140 @@ user.deliver_fake_sms # messages中会保存一条新的短信记录, 但是不�
 
 ### 基本用法
 
+##### 短信
+
+``` ruby
+
+# 发送短信到手机, 默认使用模板发送, 提供通用接口支持
+  # phone:   需要接受短信的手机号码
+  # content: 短信验证内容
+  #
+  # Options:
+  # :method 如若要使用通用短信接口, 需要 method: :general
+  # :tpl_id 选择发送短信的模板, 默认是2
+SmartSMS.deliver 13522948742, 'SmartSMS WOW!'
+SmartSMS.deliver 13522948742, 'SmartSMS WOW!', tpl_id: 1
+SmartSMS.deliver 13522948742, 'SmartSMS WOW!', method: :general # 使用通用短信发送方式, 需申请
+
+# 根据sid来查询短信记录
+SmartSMS.find_by_sid 13232
+# => {"code"=>0,
+# "msg"=>"OK",
+# "sms"=>
+#  {"sid"=>13232,
+#   "mobile"=>"13522948742",
+#   "send_time"=>"2014-04-06 13:29:33",
+#   "text"=>"您的验证码是668965。如非本人操作，请忽略本短信【SmartSMS】",
+#   "send_status"=>"SUCCESS",
+#   "report_status"=>"SUCCESS",
+#   "fee"=>1,
+#   "user_receive_time"=>"2014-04-06 13:29:49",
+#   "error_msg"=>nil}}
+
+# 批量查短信, 参数:
+#   start_time: 短信提交开始时间
+#   end_time: 短信提交结束时间
+#   page_num: 页码，从1开始
+#   page_size: 每页个数，最大100个
+#   mobile: 接收短信的手机号
+SmartSMS.find
+SmartSMS.find start_time: Time.now.yesterday, end_time: Time.now
+SmartSMS.find start_time: Time.now.yesterday, end_time: Time.now, mobile: 13522948742
+
+# 查询屏蔽词
+SmartSMS.get_black_word '这是一条测试短信'
+# => {"code"=>0, "msg"=>"OK", "result"=>{"black_word"=>"测试"}}
+
+# 查回复的短信, 参数与批量查短信一致, 可以查询用户回复的短信
+SmartSMS.get_reply
+SmartSMS.get_reply start_time: Time.now.yesterday, end_time: Time.now
+SmartSMS.get_reply start_time: Time.now.yesterday, end_time: Time.now, mobile: 13522948742
+
+```
+
+##### 账户
+
+``` ruby
+
+# 获取用户信息
+SmartSMS::Account.info
+# =>
+#{
+#  "code" => 0,
+#  "msg" => "OK",
+#  "user" => {
+#    "nick" => "Jacky",
+#    "gmt_created" => "2012-09-11 15:14:00",
+#    "mobile" => "13764071479",
+#    "email" => "jacky@taovip.com",
+#    "ip_whitelist" => null,                 //IP白名单，推荐使用
+#    "api_version" => "v1",                  //api版本号
+#    "send_count" => 0,                      //当天已发送的短信数
+#    "balance" => 0,                         //短信剩余条数
+#    "alarm_balance" => 0,                   //剩余条数低于该值时提醒
+#    "emergency_contact" => "张三",           //紧急联系人
+#    "emergency_mobile" => "13812341234"     //紧急联系人电话
+#  }
+#}
+
+# 设置用户信息
+#  emergency_contact: 紧急联系人
+#  emergency_mobile:  紧急联系人手机号
+#  alarm_balance:     短信余额提醒阈值。一天只提示一次
+SmartSMS::Account.set emergency_contact: 13764071479
+# =>
+#{
+#  "code":0,
+#  "msg":"OK",
+#  "detail":null
+#}
+
+```
+
+##### 模板
+
+``` ruby
+
+# 获取系统默认模板
+# Options:
+#   tpl_id: 指定tpl_id时返回tpl_id对应的默认模板. 未指定时返回所有默认模板
+#
+SmartSMS::Template.find_default
+SmartSMS::Template.find_default 2
+
+# 获取自定义模板
+# Options:
+#   tpl_id: 指定tpl_id时返回tpl_id对应的自定义模板. 未指定时返回所有自定义模板
+#
+SmartSMS::Template.find
+SmartSMS::Template.find 3252
+
+```
+
+##### 校验码
+
+``` ruby
+
+# 生成随机校验码
+  # 三个选项:
+  #   simple:   6位随机数字, 默认
+  #   middle:   6位随机字母, 数字组合
+  #   complex:  8位随机字母, 数字, 特殊字符组合
+
+SmartSMS::VerificationCode.random          # => "141068"
+SmartSMS::VerificationCode.random :middle  # => "xey7id"
+SmartSMS::VerificationCode.random :complex # => "x+rkag6a"
+
+SmartSMS::VerificationCode.simple  # => "141068"
+SmartSMS::VerificationCode.middle  # => "xey7id"
+SmartSMS::VerificationCode.complex # => "x+rkag6a"
+
+```
+
+## 贡献
+
++ Fork
++ 创建分支 (git checkout -b my-new-feature)
++ 保存代码 (git commit -am 'Added some feature')
++ 上传到分支 (git push origin my-new-feature)
++ 创建一个新的合并请求
