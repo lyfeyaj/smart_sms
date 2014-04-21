@@ -1,7 +1,7 @@
 SmartSMS [![Build Status](https://travis-ci.org/lyfeyaj/smart_sms.png?branch=master)](https://travis-ci.org/lyfeyaj/smart_sms) [![Code Climate](https://codeclimate.com/github/lyfeyaj/smart_sms.png)](https://codeclimate.com/github/lyfeyaj/smart_sms)
 ===================================
 
-提供在中国境内发送短信, 校验, 集成 ActiveRecord
+提供在中国境内发送短信(云片网络), 校验, 集成 ActiveRecord
 
 功能特点
 --------
@@ -66,7 +66,7 @@ SmartSMS.configure do |config|
 end
 ```
 
-##### API 汇总
+##### API 汇总(ActiveRecord)
 
 当在您现有的 model 中声明 `has_sms_verification` 的时候, 您将获得以下方法:
 ``` ruby
@@ -106,7 +106,7 @@ user.latest_message # 返回有效期内的最近一条短信, 若无则返回ni
 user.deliver_fake_sms # messages中会保存一条新的短信记录, 但是不会发送短信到手机
 ```
 
-### 基本用法
+### 基本用法(不依赖Rails)
 
 ##### 短信
 
