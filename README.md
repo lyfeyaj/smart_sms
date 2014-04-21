@@ -108,6 +108,11 @@ user.deliver_fake_sms # messages中会保存一条新的短信记录, 但是不�
 
 ### 基本用法(不依赖Rails)
 
+##### 设置api_key
+``` ruby
+SmartSMS.configure { |c| c.api_key = 'fure8423n4324uoj432n4324' }
+```
+
 ##### 短信
 
 ``` ruby
