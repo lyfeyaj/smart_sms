@@ -252,7 +252,14 @@ SmartSMS::VerificationCode.complex # => "x+rkag6a"
 + 创建一个新的合并请求
 
 ## LICENCE
+
 MIT
 
 ## 作者
+
 [Felix Liu](https://github.com/lyfeyaj)
+
+## TODO
+
++ 增加测试用例覆盖率
++ 
