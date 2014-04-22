@@ -1,7 +1,7 @@
 SmartSMS [![Build Status](https://travis-ci.org/lyfeyaj/smart_sms.png?branch=master)](https://travis-ci.org/lyfeyaj/smart_sms) [![Code Climate](https://codeclimate.com/github/lyfeyaj/smart_sms.png)](https://codeclimate.com/github/lyfeyaj/smart_sms)
 ===================================
 
-提供在中国境内发送短信(云片网络), 校验, 集成 ActiveRecord
+提供在中国境内发送短信([云片网络](http://www.yunpian.com)), 校验, 集成 ActiveRecord
 
 功能特点
 --------
@@ -41,6 +41,9 @@ gem 'smart_sms'
 然后, 在 console 中执行下面的代码:
 
 ``` bash
+# 安装gem
+bundle
+
 rails g smart_sms:config # 将会拷贝配置文件至 `config/initializers/smart_sms_config.rb`
 
 # 如果, 需要将所有短信都在本地存储, 则需要将配置文件中的 `store_sms_in_local` 设置为 true, 然后运行
