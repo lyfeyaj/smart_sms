@@ -1,8 +1,7 @@
 # encoding: utf-8
 begin
   require 'rails'
-rescue LoadError => e
-  puts e
+rescue LoadError
 end
 
 require 'rubygems'
@@ -10,6 +9,7 @@ require 'bundler/setup'
 Bundler.require
 
 require 'webmock/rspec'
+
 require 'smart_sms'
 
 require 'database_cleaner'
