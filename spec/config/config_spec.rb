@@ -7,7 +7,7 @@ describe SmartSMS::Configuration do
 
   describe 'api_key' do
     context 'by_default' do
-      its(:api_key) { should == nil }
+      its(:api_key) { should == 'fake_api_key' }
     end
     context 'configured via config block' do
       before do
@@ -15,7 +15,7 @@ describe SmartSMS::Configuration do
       end
       its(:api_key) { should == 'fdswerfsffsdfdvdsrr23432' }
       after do
-        SmartSMS.configure { |c| c.api_key == nil }
+        SmartSMS.configure { |c| c.api_key = 'fake_api_key'  }
       end
     end
   end
@@ -30,7 +30,7 @@ describe SmartSMS::Configuration do
       end
       its(:api_version) { should == :v2 }
       after do
-        SmartSMS.configure { |c| c.api_version == :v1 }
+        SmartSMS.configure { |c| c.api_version = :v1 }
       end
     end
   end
@@ -45,7 +45,7 @@ describe SmartSMS::Configuration do
       end
       its(:template_id) { should == '1' }
       after do
-        SmartSMS.configure { |c| c.template_id == '2' }
+        SmartSMS.configure { |c| c.template_id = '2' }
       end
     end
   end
@@ -60,7 +60,7 @@ describe SmartSMS::Configuration do
       end
       its(:template_value) { should == [:code] }
       after do
-        SmartSMS.configure { |c| c.template_value == [:code, :company] }
+        SmartSMS.configure { |c| c.template_value = [:code, :company] }
       end
     end
   end
@@ -75,7 +75,7 @@ describe SmartSMS::Configuration do
       end
       its(:page_num) { should == 2 }
       after do
-        SmartSMS.configure { |c| c.page_num == 1 }
+        SmartSMS.configure { |c| c.page_num = 1 }
       end
     end
   end
@@ -90,14 +90,14 @@ describe SmartSMS::Configuration do
       end
       its(:page_size) { should == 50 }
       after do
-        SmartSMS.configure { |c| c.page_size == 20 }
+        SmartSMS.configure { |c| c.page_size = 20 }
       end
     end
   end
 
   describe 'company' do
     context 'by_default' do
-      its(:company) { should == '云片网' }
+      its(:company) { should == 'Smart SMS' }
     end
     context 'configured via config block' do
       before do
@@ -105,7 +105,7 @@ describe SmartSMS::Configuration do
       end
       its(:company) { should == 'Edgepeek' }
       after do
-        SmartSMS.configure { |c| c.company == '云片网' }
+        SmartSMS.configure { |c| c.company = 'Smart SMS' }
       end
     end
   end
@@ -120,7 +120,7 @@ describe SmartSMS::Configuration do
       end
       its(:expires_in) { should == 45.minutes }
       after do
-        SmartSMS.configure { |c| c.expires_in == 1.hour }
+        SmartSMS.configure { |c| c.expires_in = 1.hour }
       end
     end
   end
@@ -135,22 +135,22 @@ describe SmartSMS::Configuration do
       end
       its(:default_interval) { should == 2.day }
       after do
-        SmartSMS.configure { |c| c.default_interval == 1.day }
+        SmartSMS.configure { |c| c.default_interval = 1.day }
       end
     end
   end
 
   describe 'store_sms_in_local' do
     context 'by_default' do
-      its(:store_sms_in_local) { should == false }
+      its(:store_sms_in_local) { should == true }
     end
     context 'configured via config block' do
       before do
-        SmartSMS.configure { |c| c.store_sms_in_local = true }
+        SmartSMS.configure { |c| c.store_sms_in_local = false }
       end
-      its(:store_sms_in_local) { should == true }
+      its(:store_sms_in_local) { should == false }
       after do
-        SmartSMS.configure { |c| c.store_sms_in_local == false }
+        SmartSMS.configure { |c| c.store_sms_in_local = true }
       end
     end
   end
@@ -165,7 +165,7 @@ describe SmartSMS::Configuration do
       end
       its(:verification_code_algorithm) { should == :middle }
       after do
-        SmartSMS.configure { |c| c.verification_code_algorithm == :simple }
+        SmartSMS.configure { |c| c.verification_code_algorithm = :simple }
       end
     end
   end
