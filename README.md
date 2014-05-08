@@ -224,6 +224,19 @@ SmartSMS::Template.find_default 2
 SmartSMS::Template.find
 SmartSMS::Template.find 3252
 
+# 创建新模板
+# 规则请参见: <http://www.yunpian.com/api/tpl.html>
+#
+SmartSMS::Template.create '您的验证码是: #code#'
+
+# 更新模板, 需指定id和content
+#
+SmartSMS::Template.update 3252, '您的验证码是: #code#, 【SmartSMS】'
+
+# 删除模板, 需指定id
+#
+SmartSMS::Template.destroy 3252
+
 ```
 
 ##### 校验码
