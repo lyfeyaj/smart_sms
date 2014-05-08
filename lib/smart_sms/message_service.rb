@@ -68,6 +68,8 @@ module SmartSMS
       def parse_time(time = '')
         if time.present? && time.is_a?(Time)
           time.strftime DATETIME_FORMAT
+        elsif time.is_a? String
+          time
         else
           ''
         end

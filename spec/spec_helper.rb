@@ -6,7 +6,7 @@ end
 
 require 'rubygems'
 require 'bundler/setup'
-Bundler.require
+# Bundler.require
 
 require 'webmock/rspec'
 

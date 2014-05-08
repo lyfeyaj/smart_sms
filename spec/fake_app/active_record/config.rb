@@ -6,4 +6,4 @@ ActiveRecord::Base.configurations = {
   }
 }
 
-ActiveRecord::Base.establish_connection('test')
+ActiveRecord::Base.establish_connection(:test)
