@@ -15,9 +15,6 @@ require 'smart_sms'
 require 'database_cleaner'
 
 # WebMock.allow_net_connect!
-RSpec.configure do |config|
-end
-
 
 if defined? Rails
   require 'fake_app/rails_app'

@@ -5,10 +5,10 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'smart_sms/version'
 
 Gem::Specification.new do |s|
-  s.name          = "smart_sms"
+  s.name          = 'smart_sms'
   s.version       = SmartSMS::VERSION
-  s.authors       = ["lyfeyaj"]
-  s.email         = ["lyfeyaj@gmail.com"]
+  s.authors       = ['lyfeyaj']
+  s.email         = ['lyfeyaj@gmail.com']
   s.description   = %q{A smart sms verification tool}
   s.summary       = %q{A smart sms verification tool used in China and integrate with yunpian.com}
   s.homepage      = 'https://github.com/lyfeyaj/smart_sms'
