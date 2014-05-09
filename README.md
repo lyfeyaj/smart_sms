@@ -244,15 +244,18 @@ SmartSMS::Template.destroy 3252
 ``` ruby
 
 # 生成随机校验码
-  # 三个选项:
-  #   simple:   6位随机数字, 默认
-  #   middle:   6位随机字母, 数字组合
-  #   complex:  8位随机字母, 数字, 特殊字符组合
+  # 四个选项:
+  #   short:   4位随机数字
+  #   simple:  6位随机数字, 默认
+  #   middle:  6位随机字母, 数字组合
+  #   complex: 8位随机字母, 数字, 特殊字符组合
 
-SmartSMS::VerificationCode.random          # => "141068"
+SmartSMS::VerificationCode.random          # => "1708"
+SmartSMS::VerificationCode.random :short   # => "141068"
 SmartSMS::VerificationCode.random :middle  # => "xey7id"
 SmartSMS::VerificationCode.random :complex # => "x+rkag6a"
 
+SmartSMS::VerificationCode.short   # => "1708"
 SmartSMS::VerificationCode.simple  # => "141068"
 SmartSMS::VerificationCode.middle  # => "xey7id"
 SmartSMS::VerificationCode.complex # => "x+rkag6a"
