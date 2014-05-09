@@ -13,12 +13,12 @@ module SmartSMS
     module ClassMethods
 
       # 在您的Model里面声明这个方法, 以添加SMS短信验证功能
-      # moible_column:       mobile 绑定的字段, 用于发送短信
-      # verification_column: 验证绑定的字段, 用于判断是否已验证
+      # moible_column:       mobile 绑定的字段, 用于发送短信, 默认 :phone
+      # verification_column: 验证绑定的字段, 用于判断是否已验证, 默认 :verified_at
       #
       # Options:
       # :class_name   自定义的Message类名称. 默认是 `::SmartSMS::Message`
-      # :messages     自定义的Message关联名称.  默认是 `:versions`.
+      # :messages     自定义的Message关联名称.  默认是 `:messages`.
       #
       def has_sms_verification(moible_column = :phone, verification_column = :verified_at, options = {})
         send :include, InstanceMethods
@@ -41,7 +41,7 @@ module SmartSMS
           class_attribute :message_class_name
           self.message_class_name = options[:class_name] || '::SmartSMS::Message'
 
-          if ::ActiveRecord::VERSION::MAJOR >= 4 # Rails 4 里面, 在 `has_many` 声明中定义order lambda的语法
+          if ::ActiveRecord::VERSION::MAJOR >= 4 # Rails 4 的 `has_many` 中定义order lambda的新语法
             has_many messages_association_name,
               -> { order('send_time ASC') },
               class_name: message_class_name,
