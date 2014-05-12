@@ -272,12 +272,8 @@ SmartSMS::VerificationCode.complex # => "x+rkag6a"
 
 ## LICENCE
 
-MIT
+[MIT](https://github.com/lyfeyaj/smart_sms/blob/master/LICENSE)
 
 ## 作者
 
 [Felix Liu](https://github.com/lyfeyaj)
-
-## TODO
-
-+ 增加测试用例覆盖率
