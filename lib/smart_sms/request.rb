@@ -5,6 +5,8 @@ require 'active_support/json'
 module SmartSMS
   # Module that manage requests
   module Request
+    # Method that use `Net::HTTP.post_form` to perform `POST` action
+    #
     def post(api, options = {})
       options[:apikey] = SmartSMS.config.api_key
       uri = URI.join(base_url, api)
@@ -12,6 +14,8 @@ module SmartSMS
       result res.body
     end
 
+    # Method that use `Net::HTTP.get` to perform `GET` action
+    #
     def get(api, options = {})
       options[:apikey] = SmartSMS.config.api_key
       uri = URI.join(base_url, api)
@@ -20,6 +24,8 @@ module SmartSMS
 
     private
 
+    # Method that parse JSON to Hash
+    #
     def result(body)
       begin
         ActiveSupport::JSON.decode body
@@ -32,6 +38,7 @@ module SmartSMS
       end
     end
 
+    # Base uri for yunpian API
     def base_url
       "http://yunpian.com/#{SmartSMS.config.api_version}/"
     end

@@ -1,11 +1,17 @@
 # encoding: utf-8
 
 module SmartSMS
-  # This will generate fake sms
+  # Module that contains methods to generate fake message
   #
   module FakeSMS
     module_function
 
+    # This will generate fake sms with all necessary attributes
+    # +Options:+
+    #   mobile: mobile number
+    #   code:   verification code
+    #   company: assigned company, format is【company】
+    #
     def build_fake_sms(mobile, code, company)
       {
         'sid'               => SecureRandom.uuid,

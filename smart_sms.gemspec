@@ -30,4 +30,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rails', ['>= 3.1.0']
   s.add_development_dependency 'sqlite3', ['>= 0']
   s.add_development_dependency 'pry', ['>= 0']
+  s.add_development_dependency 'sdoc', ['>= 0']
 end

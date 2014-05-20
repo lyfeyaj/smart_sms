@@ -1,0 +1,21 @@
+--- !ruby/object:RDoc::Options
+encoding: UTF-8
+static_path: []
+rdoc_include:
+- "./lib"
+charset: UTF-8
+exclude:
+- './spec'
+hyperlink_all: true
+line_numbers: true
+main_page:
+markup: markdown
+output_decoration: true
+page_dir:
+search_index: true
+show_hash: false
+tab_width: 8
+template_stylesheets: []
+title:
+visibility: :private
+webcvs:
