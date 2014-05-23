@@ -7,10 +7,12 @@ module SmartSMS
     module_function
 
     # This will generate fake sms with all necessary attributes
-    # +Options:+
-    #   mobile: mobile number
-    #   code:   verification code
-    #   company: assigned company, format is【company】
+    #
+    # Options:
+    #
+    #   * mobile: mobile number
+    #   * code:   verification code
+    #   * company: assigned company, format is【company】
     #
     def build_fake_sms(mobile, code, company)
       {

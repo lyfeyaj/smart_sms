@@ -2,11 +2,13 @@ require 'securerandom'
 
 module SmartSMS
   # This module provides some methods to generate random verification code
+  #
   # Algorithm:
-  #   short:    Generate short code with 4 numbers
-  #   simple:   Generate simple code with 6 numbers
-  #   middle:   Generate middle complex code of 6 charactors with mixed numbers and letters
-  #   complex:  Generate complex code of 8 charactors with mixed numbers, letters or special charactors
+  #
+  #   * short:    Generate short code with 4 numbers
+  #   * simple:   Generate simple code with 6 numbers
+  #   * middle:   Generate middle complex code of 6 charactors with mixed numbers and letters
+  #   * complex:  Generate complex code of 8 charactors with mixed numbers, letters or special charactors
   module VerificationCode
     module_function
 

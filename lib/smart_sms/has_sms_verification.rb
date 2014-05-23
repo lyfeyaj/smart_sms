@@ -13,12 +13,13 @@ module SmartSMS
     module ClassMethods
 
       # 在您的Model里面声明这个方法, 以添加SMS短信验证功能
-      # moible_column:       mobile 绑定的字段, 用于发送短信, 默认 :phone
-      # verification_column: 验证绑定的字段, 用于判断是否已验证, 默认 :verified_at
+      #
+      # * moible_column:       mobile 绑定的字段, 用于发送短信, 默认 :phone
+      # * verification_column: 验证绑定的字段, 用于判断是否已验证, 默认 :verified_at
       #
       # Options:
-      # :class_name   自定义的Message类名称. 默认是 `::SmartSMS::Message`
-      # :messages     自定义的Message关联名称.  默认是 `:messages`.
+      #   * :class_name   自定义的Message类名称. 默认是 `::SmartSMS::Message`
+      #   * :messages     自定义的Message关联名称.  默认是 `:messages`.
       #
       def has_sms_verification(moible_column = :phone, verification_column = :verified_at, options = {})
         send :include, InstanceMethods
@@ -57,8 +58,10 @@ module SmartSMS
       end
 
       # Instance methods
+      #
       module InstanceMethods
         # 非安全verify!方法, 验证成功后会存储成功的结果到数据表中
+        #
         def verify!(code)
           result = verify code
           if result

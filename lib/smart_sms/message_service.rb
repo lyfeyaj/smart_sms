@@ -71,6 +71,9 @@ module SmartSMS
         Request.post api, options
       end
 
+      # 解析日期时间
+      # 格式可以是 `2014-05-01 08:40:20`, 也可以是Time类型
+      #
       def parse_time(time = '')
         if time.present? && time.is_a?(Time)
           time.strftime DATETIME_FORMAT
@@ -81,6 +84,8 @@ module SmartSMS
         end
       end
 
+      # 生成信息发送内容
+      #
       def parse_content(options = {})
         options[:code] ||= ''
         options[:company] ||= SmartSMS.config.company

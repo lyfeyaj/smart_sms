@@ -7,7 +7,8 @@ module SmartSMS
 
     # 取默认模板
     # Options:
-    #   tpl_id: 指定tpl_id时返回tpl_id对应的默认模板. 未指定时返回所有默认模板
+    #
+    #   * tpl_id: 指定tpl_id时返回tpl_id对应的默认模板. 未指定时返回所有默认模板
     #
     def find_default(tpl_id = '')
       Request.post 'tpl/get_default.json', tpl_id: tpl_id
@@ -15,7 +16,8 @@ module SmartSMS
 
     # 取自定义模板
     # Options:
-    #   tpl_id: 指定tpl_id时返回tpl_id对应的自定义模板. 未指定时返回所有自定义模板
+    #
+    #   * tpl_id: 指定tpl_id时返回tpl_id对应的自定义模板. 未指定时返回所有自定义模板
     #
     def find(tpl_id = '')
       Request.post 'tpl/get.json', tpl_id: tpl_id
