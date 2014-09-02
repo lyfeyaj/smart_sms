@@ -13,7 +13,7 @@ You need to set `store_sms_in_local` to `true` in your config file
 before running this command
   EOF
 
-    def create_migration_file
+    def create_migration_file      
       add_smart_sms_migration('create_smart_sms_messages') if SmartSMS.config.store_sms_in_local
     end
 
