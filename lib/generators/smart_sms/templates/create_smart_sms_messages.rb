@@ -12,8 +12,10 @@ class CreateSmartSmsMessages < ActiveRecord::Migration
       t.datetime :user_receive_time
       t.text :error_msg
       t.belongs_to :smsable, polymorphic: true
+      t.string  :uid
     end
     add_index :smart_sms_messages, :sid
+    add_index :smart_sms_messages, :uid
     add_index :smart_sms_messages, [:smsable_id, :smsable_type]
   end
 end
