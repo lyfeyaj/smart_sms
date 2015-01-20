@@ -18,8 +18,8 @@ describe 'SmartSMS::HasSmsVerification' do
         before { user.verify! verification_code }
 
         it 'should be verified' do
-          expect { user.verify! verification_code }.to be_true
-          expect(user.reload.verified?).to be_true
+          expect(user.verify! verification_code).to be_truthy
+          expect(user.reload.verified?).to be_truthy
         end
 
         it 'should have right verification code' do
@@ -46,7 +46,7 @@ describe 'SmartSMS::HasSmsVerification' do
 
         it 'should not be verified' do
           expect(user.verify!('kfdsfd')).to be_nil
-          expect(user.reload.verified?).to be_false
+          expect(user.reload.verified?).to be_falsey
         end
 
         it 'should not have right verification code' do
@@ -79,8 +79,8 @@ describe 'SmartSMS::HasSmsVerification' do
         before { account.verify! verification_code }
 
         it 'should be verified' do
-          expect { account.verify! verification_code }.to be_true
-          expect(account.reload.verified?).to be_true
+          expect(account.verify! verification_code).to be_truthy
+          expect(account.reload.verified?).to be_truthy
         end
 
         it 'should have right verification code' do
@@ -111,7 +111,7 @@ describe 'SmartSMS::HasSmsVerification' do
 
         it 'should not be verified' do
           expect(account.verify!('kfdsfd')).to be_nil
-          expect(account.reload.verified?).to be_false
+          expect(account.reload.verified?).to be_falsey
         end
 
         it 'should not have right verification code' do
@@ -152,8 +152,8 @@ describe 'SmartSMS::HasSmsVerification' do
         before { user.verify verification_code }
 
         it 'should be verified' do
-          expect { user.verify verification_code }.to be_true
-          expect(user.reload.verified?).to be_false
+          expect(user.verify verification_code).to be_truthy
+          expect(user.reload.verified?).to be_falsey
         end
 
         it 'should have right verification code' do
@@ -167,7 +167,7 @@ describe 'SmartSMS::HasSmsVerification' do
         it 'should not be verified by using expired verification code' do
           user.verified_at = nil
           user.save
-          expect(user.verify(user.messages.first.code)).to be_false
+          expect(user.verify(user.messages.first.code)).to be_falsey
         end
 
         it 'should be the latest_message' do
@@ -179,8 +179,8 @@ describe 'SmartSMS::HasSmsVerification' do
         before { user.verify 'kfdsfd' }
 
         it 'should not be verified' do
-          expect(user.verify('kfdsfd')).to be_false
-          expect(user.reload.verified?).to be_false
+          expect(user.verify('kfdsfd')).to be_falsey
+          expect(user.reload.verified?).to be_falsey
         end
 
         it 'should not have right verification code' do
@@ -194,7 +194,7 @@ describe 'SmartSMS::HasSmsVerification' do
         it 'should not be verified by using expired verification code' do
           user.verified_at = nil
           user.save
-          expect(user.verify(user.messages.first.code)).to be_false
+          expect(user.verify(user.messages.first.code)).to be_falsey
         end
 
         it 'should be the latest_message' do
@@ -213,8 +213,8 @@ describe 'SmartSMS::HasSmsVerification' do
         before { account.verify verification_code }
 
         it 'should be verified' do
-          expect { account.verify verification_code }.to be_true
-          expect(account.reload.verified?).to be_false
+          expect(account.verify verification_code).to be_truthy
+          expect(account.reload.verified?).to be_falsey
         end
 
         it 'should have right verification code' do
@@ -228,7 +228,7 @@ describe 'SmartSMS::HasSmsVerification' do
         it 'should not be verified by using expired verification code' do
           account.confirmed_at = nil
           account.save
-          expect(user.verify(account.messages.first.code)).to be_false
+          expect(user.verify(account.messages.first.code)).to be_falsey
         end
 
         it 'should be the latest_message' do
@@ -244,8 +244,8 @@ describe 'SmartSMS::HasSmsVerification' do
         before { account.verify 'kfdsfd' }
 
         it 'should not be verified' do
-          expect(account.verify('kfdsfd')).to be_false
-          expect(account.reload.verified?).to be_false
+          expect(account.verify('kfdsfd')).to be_falsey
+          expect(account.reload.verified?).to be_falsey
         end
 
         it 'should not have right verification code' do
@@ -259,7 +259,7 @@ describe 'SmartSMS::HasSmsVerification' do
         it 'should not be verified by using expired verification code' do
           account.confirmed_at = nil
           account.save
-          expect(account.verify(account.messages.first.code)).to be_false
+          expect(account.verify(account.messages.first.code)).to be_falsey
         end
 
         it 'should be the latest_message' do

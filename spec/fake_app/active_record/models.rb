@@ -23,6 +23,7 @@ class CreateAllTables < ActiveRecord::Migration
 
     create_table :smart_sms_messages do |t|
       t.string :sid
+      t.string :uid
       t.string :mobile
       t.datetime :send_time
       t.text :text
@@ -35,6 +36,7 @@ class CreateAllTables < ActiveRecord::Migration
       t.belongs_to :smsable, polymorphic: true
     end
     add_index :smart_sms_messages, :sid
+    add_index :smart_sms_messages, :uid
     add_index :smart_sms_messages, [:smsable_id, :smsable_type]
   end
 end

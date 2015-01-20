@@ -14,7 +14,9 @@ before running this command
   EOF
 
     def create_migration_file
-      add_smart_sms_migration('create_smart_sms_messages') if SmartSMS.config.store_sms_in_local
+      return unless SmartSMS.config.store_sms_in_local
+      add_smart_sms_migration('create_smart_sms_messages')
+      add_smart_sms_migration('add_uid_to_smart_sms_messages')
     end
 
     def self.next_migration_number(dirname)

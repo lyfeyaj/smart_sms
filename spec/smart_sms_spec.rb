@@ -242,7 +242,7 @@ describe SmartSMS do
           'sms_reply'  => [
             {
               'id'         => nil,
-              'mobile'     => '15121000465',
+              'mobile'     => phone,
               'text'       => '哈哈',
               'reply_time' => '2014-05-08 12:03:16',
               'extend'     => '11642'
@@ -256,5 +256,6 @@ describe SmartSMS do
     its(['msg']) { should eq 'OK' }
     its(:keys) { should include 'sms_reply' }
     its(['sms_reply']) { should_not be_empty }
+    its(['sms_reply', 0, 'mobile']) { should eq phone }
   end
 end

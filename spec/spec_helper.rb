@@ -8,6 +8,7 @@ require 'rubygems'
 require 'bundler/setup'
 # Bundler.require
 
+require 'rspec/its'
 require 'webmock/rspec'
 
 require 'smart_sms'
