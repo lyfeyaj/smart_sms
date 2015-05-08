@@ -279,4 +279,5 @@ SmartSMS::VerificationCode.complex # => "x+rkag6a"
 ## 作者
 
 [Felix Liu](https://github.com/lyfeyaj) 
+
 [作者博客](http://lyfeyaj.com)
